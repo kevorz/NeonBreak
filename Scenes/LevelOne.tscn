@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scenes/Paddle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Ball.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Brick.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Paddle.cs" type="Script" id=4]
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_hdr_threshold = 1.5
+
+[sub_resource type="PhysicsMaterial" id=2]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id=3]
+
+[node name="Game" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+pause_mode = 2
+environment = SubResource( 1 )
+
+[node name="UI" type="Control" parent="."]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BG" type="ColorRect" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="Collision" type="CollisionPolygon2D" parent="Walls"]
+polygon = PoolVector2Array( -1, 719, 0, -1, 1279, 1, 1278, 719, 1344, 719, 1344, -63, -66, -63, -65, 720 )
+
+[node name="Ball" parent="." instance=ExtResource( 2 )]
+modulate = Color( 3, 1, 3, 1 )
+position = Vector2( 641, 516 )
+mode = 2
+physics_material_override = SubResource( 2 )
+linear_velocity = Vector2( 0, 0 )
+
+[node name="Paddle" parent="." instance=ExtResource( 1 )]
+modulate = Color( 1, 3, 1, 1 )
+position = Vector2( 640, 680 )
+scale = Vector2( 1, 0.75 )
+script = ExtResource( 4 )
+Speed = 800
+
+[node name="Brick" parent="." instance=ExtResource( 3 )]
+position = Vector2( 644, 74 )
+scale = Vector2( 0.8, 0.8 )
+
+[node name="Floor" type="Area2D" parent="."]
+position = Vector2( 640, 731 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+scale = Vector2( 70, 1 )
+shape = SubResource( 3 )
