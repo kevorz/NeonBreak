@@ -9,3 +9,4 @@ W,D or left and right arrow keys to move.
   extra balls
  
  Extra life also gained on every X score.
+
